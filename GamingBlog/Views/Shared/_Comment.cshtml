@@ -1,0 +1,51 @@
+﻿@using Microsoft.AspNet.Identity
+@using Microsoft.AspNet.Identity.EntityFramework;
+@using GamingBlog.Models;
+@{
+    var manager = new UserManager<ApplicationUser>(new Microsoft.AspNet.Identity.EntityFramework.UserStore<ApplicationUser>(new ApplicationDbContext()));
+    var currentUser = manager.FindById(User.Identity.GetUserId());
+}
+
+        <div class="col-md-12">
+            @using(Html.BeginForm("Create", "Comments", FormMethod.Post, new { onsubmit = "return Submitcomment()" }))
+            {
+                @Html.AntiForgeryToken()
+                <div class="form-horizontal">
+     
+                    <div class="form-group">
+                            <div>
+                                <textarea name="ContentOfComment" id="comment" required rows="5" style="width:100%;" class="form-control"></textarea>
+                            </div>
+                        </div>
+                    <div class="form-group">
+                        <div>
+                            @if (!User.Identity.IsAuthenticated)
+                            {
+                                <text>Please <a href="/Account/Login?ReturnUrl=@Request.Url.AbsolutePath" title="Login to rate">Login</a> to leave a Comment</text>
+                                return;
+                            }
+                            <input type="hidden" name="AuthorName" value="@User.Identity.GetUserName()" />
+                            <input type="hidden" name="PostID" value="@ViewBag.ArticleId" />
+                            <input type="hidden" name="UserID" value="@User.Identity.GetUserId()" />
+                            <input type="hidden" name="DateOfComment" value="@DateTime.Now"/>
+                            <input type="hidden" name="UserProfilePicture" value="@currentUser.ProfilePicture" />
+                            <input type="submit" value="Submit Comment" class="btn btn-warning" />
+
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+<script>
+    function Submicomment() {
+        
+        var commet = $.trim($('#comment').val());
+        if(commet.length == 0){
+            alert('Please fill the required field for somment submission.');
+            return false;
+        } else
+        {
+            return true;
+        }
+    }
+</script>

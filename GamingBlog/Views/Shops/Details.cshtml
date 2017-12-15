@@ -1,0 +1,27 @@
+﻿@model GamingBlog.Models.Shop
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Shop</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ShopTitle)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ShopTitle)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ShopID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

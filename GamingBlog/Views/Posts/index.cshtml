@@ -1,0 +1,43 @@
+﻿@using PagedList.Mvc;
+@model PagedList.IPagedList<GamingBlog.Models.Post>
+
+@{
+    ViewBag.Title = "Posts";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>All Posts</h2>
+@{
+    foreach (var item in Model) {
+        <hr />
+        <div class="well-sm">
+            <div class="row">
+                <h1>@Html.DisplayFor(modelItem => item.PostTitle)</h1>
+                <p class="row"><span class="glyphicon glyphicon-user"> @Html.DisplayFor(modelItem => item.AuthorName) |&nbsp; </span><span class="glyphicon glyphicon-calendar" >@Html.DisplayFor(modelItem => item.Date)</span></p>
+            </div>
+            <div class="row">
+                <div class="col-md-offset-4 col-md-4">
+                    <img src="@Html.DisplayFor(modelItem => item.ImageUrl)" class="img-thumbnail img-responsive" />
+                </div>
+                <div class="col-md-4">
+
+                </div>
+            </div>
+            <div class="row">
+                <p style="text-align:justify">
+                    @Html.DisplayFor(modelItem => item.PostContent)
+                </p>
+            </div>
+            <div class="row">
+                <p><span class="glyphicon glyphicon-hand-right">&nbsp;Category :&nbsp; </span>@Html.DisplayFor(modelItem => item.PostCategory)</p>
+            </div>
+
+
+        </div>
+
+    }
+}
+
+<div>
+    @Html.PagedListPager(Model, page => Url.Action("Display", new { page }))
+</div>

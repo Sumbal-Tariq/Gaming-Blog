@@ -1,0 +1,66 @@
+﻿@model GamingBlog.Models.Post
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Dash.cshtml";
+}
+<h2>Post Detail</h2>
+
+<div>
+    <hr />
+    <div class="row">
+        <div class="col-md-7">
+            <dt>
+                @Html.DisplayNameFor(model => model.PostTitle)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.PostTitle)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.AuthorName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.AuthorName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Date)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Date)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.PostCategory)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.PostCategory)
+            </dd>
+
+        </div>
+        <div class="col-md-5">
+            <img src="@Html.DisplayFor(model => model.ImageUrl)" class="img img-responsive" style="width:170px;height:170px" />
+        </div>
+    </div>
+    <div class="row col-md-12">
+        <dt>
+            @Html.DisplayNameFor(model => model.PostContent)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PostContent)
+        </dd>
+
+    </div>
+</div>
+<br />
+<p>
+    <span class="btn btn-primary  glyphicon glyphicon-arrow-left"" id="myButton">
+        @Html.ActionLink("Back", "Display")</span>
+</p>
+

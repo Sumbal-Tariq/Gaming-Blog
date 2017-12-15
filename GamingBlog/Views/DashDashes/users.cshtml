@@ -1,0 +1,28 @@
+﻿@{
+    ViewBag.Title = "users";
+    Layout = "~/Views/Shared/_Dash.cshtml";
+}
+<h2>Users</h2>
+
+<h4>Total Registered Users :  @ViewBag.totalUsers</h4>
+<table class="table">
+    <tr>
+        <th>User Name </th>
+        <th>Email</th>
+        <th>Profile Picture</th>
+    </tr>
+
+@foreach (var item in ViewBag.RegUsers) {
+
+    <tr>
+        <td>
+           @item.UserName
+        </td>
+        <td>
+            @item.UserEmail
+        </td>
+        <td> <img src="@item.ProfilePicture" class="img img-responsive" style="width:100px;height:100px"/></td>
+    </tr>
+}
+
+</table>

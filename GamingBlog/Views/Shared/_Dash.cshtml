@@ -1,0 +1,87 @@
+﻿@using Microsoft.AspNet.Identity
+@using Microsoft.AspNet.Identity.EntityFramework;
+@using GamingBlog.Models;
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Gaming Blog</title>
+    <link href="~/Content/Site.css" rel="stylesheet">
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+
+@{
+    var manager = new UserManager<ApplicationUser>(new Microsoft.AspNet.Identity.EntityFramework.UserStore<ApplicationUser>(new ApplicationDbContext()));
+    var currentUser = manager.FindById(User.Identity.GetUserId());
+
+
+}
+<body class="size-1140">
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Gaming Blog", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav" id="DashBoardNav">
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li>@Html.ActionLink("About", "About", "Home")</li>
+                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    <li>@Html.ActionLink("Our Blog", "index", "Posts")</li>
+                    <li>@Html.ActionLink("Shop", "Index", "Shops")</li>
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+    <div class="container body-content" style="background-color:#FAFAFA">
+
+        <div class="row" style="padding-top:6px;margin-left:-86px;">
+            <div class="col-md-3">
+                <div class="sidebar-nav"style="position:fixed;width:290px;height: 100%;background-color:#930050">
+                    <div class="navbar navbar-default" role="navigation">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-navbar-collapse">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                            <span class="visible-xs navbar-brand">Sidebar menu</span>
+                        </div>
+                        <div class="navbar-collapse collapse sidebar-navbar-collapse">
+                            <ul class="nav navbar-nav navbar-inverse" style="background-color:#930050">
+                                <a href="@Url.Action("Index","DashDashes")"><img src="@currentUser.ProfilePicture" class="img-circle img-responsive col-md-offset-2" style="width:200px;height:220px;" /></a>
+                                <p style="text-decoration:none;color:white;font-size:30px;text-align:center"> @User.Identity.GetUserName()</p>
+                                <li style="background-color:cadetblue;border-bottom-color:white">@Html.ActionLink("Blog Posts", "Display", "Posts")</span></li>
+                                <li>@Html.ActionLink("Post Categories", "IndexAdmin", "Categories")</li>
+                                <li>@Html.ActionLink("Users", "users", "DashDashes")<span class="badge" id="numberOfUsers"></span></li>
+                            </ul>
+                        </div>
+                        <!--/.nav-collapse -->
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-9">
+                @RenderBody()
+                <hr />
+            </div>
+        </div>
+        </div>
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+        </footer>
+
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+        @RenderSection("scripts", required: false)
+</body>
+</html>

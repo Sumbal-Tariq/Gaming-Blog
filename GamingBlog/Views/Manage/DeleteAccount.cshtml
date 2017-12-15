@@ -1,0 +1,36 @@
+﻿@using Microsoft.AspNet.Identity
+@using Microsoft.AspNet.Identity.EntityFramework;
+@using System.Web.Mvc.Html;
+@using System.Web.Mvc (in System.Web.Mvc.dll);
+@using GamingBlog.Models;
+@{
+    ViewBag.Title = "DeleteAccount";
+}
+
+<h2>DeleteAccount</h2>
+
+<h3>Are you sure you want to delete your Account?</h3>
+
+@{
+    var manager = new UserManager<ApplicationUser>(new Microsoft.AspNet.Identity.EntityFramework.UserStore<ApplicationUser>(new ApplicationDbContext()));
+    var currentUser = manager.FindById(User.Identity.GetUserId());
+}
+<div class="well" style="background-color:black;color:white;">
+    <h2>Welcome @currentUser.UserName</h2>
+    <div class="row">
+        <div class="col-md-offset-6 col-md-6">
+            <img src="@currentUser.ProfilePicture" class="img img-thumbnail img-responsive" width="200px" height="150px" />
+        </div>
+    </div>
+</div>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-actions no-color">
+        @Html.ActionLink("Delete Your Account", "DeleteAccount", new { id = currentUser.Id, count = 2 }) |
+        @Html.ActionLink("Not Deleted", "Index")
+    </div>
+}
+  
+}

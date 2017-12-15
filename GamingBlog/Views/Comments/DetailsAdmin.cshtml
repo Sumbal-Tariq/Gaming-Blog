@@ -1,0 +1,43 @@
+﻿@model GamingBlog.Models.Comment
+
+@{
+    ViewBag.Title = "DetailsAdmin";
+    Layout = "~/Views/Shared/_Dash.cshtml";
+}
+
+<h2>DetailsAdmin</h2>
+
+<div>
+    <h4>Comment</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ContentOfComment)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ContentOfComment)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AuthorName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AuthorName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateOfComment)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateOfComment)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

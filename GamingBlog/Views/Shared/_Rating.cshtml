@@ -1,0 +1,91 @@
+﻿@using Microsoft.AspNet.Identity
+@using Microsoft.AspNet.Identity.EntityFramework;
+@using GamingBlog.Models;
+@{
+    var manager = new UserManager<ApplicationUser>(new Microsoft.AspNet.Identity.EntityFramework.UserStore<ApplicationUser>(new ApplicationDbContext()));
+    var currentUser = manager.FindById(User.Identity.GetUserId());
+}
+        
+    @using (Html.BeginForm("Create", "Ratings", FormMethod.Post, new { onsubmit = "return SubmitComment()" }))
+    {
+        @Html.AntiForgeryToken()
+        //<div>
+          // <div class="form-horizontal">
+               // <div class="form-group">
+                    <label class="control-label" style="color:white;font-size:medium">
+                        Your rating <span style="font-weight:normal;color:aqua">(1 start is bad, 5 star is good)</span>
+                    </label>
+                    <div>
+                        <div onmouseout="CRateSelected()">
+                            <span class="starFade" id="Rate1" onclick="CRate(1)" onmouseover="CRateOver(1)" onmouseout="CRateOut(1)"></span><span class="starFade" id="Rate2" onclick="CRate(2)" onmouseover="CRateOver(2)" onmouseout="CRateOut(2)"></span><span class="starFade" id="Rate3" onclick="CRate(3)" onmouseover="CRateOver(3)" onmouseout="CRateOut(3)"></span><span class="starFade" id="Rate4" onclick="CRate(4)" onmouseover="CRateOver(4)" onmouseout="CRateOut(4)"></span><span class="starFade" id="Rate5" onclick="CRate(5)" onmouseover="CRateOver(5)" onmouseout="CRateOut(5)"></span>
+                        </div>
+                    </div>
+               // </div>
+              //  <div class="form-group">
+                    <div class="col-md-12">
+                        <input type="hidden" name="UserName" value="@User.Identity.GetUserName()" />
+                        <input type="hidden" name="PostID" value="@ViewBag.ArticleId" />
+                        <input type="hidden" name="UserID" value="@User.Identity.GetUserId()" />
+                        <input type="hidden" name="Rate" id="Rating" value="0" />
+                        @if (!User.Identity.IsAuthenticated)
+                        {
+                            <span style="color:white;font-size:medium">Please <a href="/Account/Login?ReturnUrl=@Request.Url.AbsolutePath" title="Login to rate">Login</a> to rate</span>
+                            return;
+                        }
+                        @if (ViewBag.AlreadyRated == false)
+                        {
+                            <input type="submit" id="btnRegister" name="btnRegister" value="Submit Rating" class="btn btn-warning" />
+                        }
+                        else
+                        {
+                            <p style="color:white;font-size:medium"> You Have Already Rated for this Post.</p>
+                        }
+
+                    </div>
+          //     </div>
+           // </div>
+    //    </div>
+    }
+        
+
+<script>
+    function SubmitComment() {
+        if ($("#Rating").val() == "0") {
+            alert("Please rate this service provider.");
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+
+    function CRate(r) {
+        $("#Rating").val(r);
+        for (var i = 1; i <= r; i++) {
+            $("#Rate" + i).attr('class', 'starGlow');
+        }
+        // unselect remaining
+        for (var i = r + 1; i <= 5; i++) {
+            $("#Rate" + i).attr('class', 'starFade');
+        }
+    }
+
+    function CRateOver(r) {
+        for (var i = 1; i <= r; i++) {
+            $("#Rate" + i).attr('class', 'starGlow');
+        }
+    }
+
+    function CRateOut(r) {
+        for (var i = 1; i <= r; i++) {
+            $("#Rate" + i).attr('class', 'starFade');
+        }
+    }
+
+    function CRateSelected() {
+        var setRating = $("#Rating").val();
+        for (var i = 1; i <= setRating; i++) {
+            $("#Rate" + i).attr('class', 'starGlow');
+        }
+    }
+</script>

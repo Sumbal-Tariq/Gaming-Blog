@@ -1,0 +1,66 @@
+﻿@using Microsoft.AspNet.Identity
+@using Microsoft.AspNet.Identity.EntityFramework;
+@using GamingBlog.Models;
+@model GamingBlog.Models.IndexViewModel
+@{
+    ViewBag.Title = "Manage";
+}
+<style>
+    #myCarousel{
+        display:none;
+    }
+</style>
+
+<h2 style="color:#13395D">@ViewBag.Title Your Account</h2>
+
+<p class="text-success" style="color:#13395D">@ViewBag.StatusMessage</p>
+<div>
+    <h4 style="color:aqua">Change your account settings</h4>
+    @{
+        var manager = new UserManager<ApplicationUser>(new Microsoft.AspNet.Identity.EntityFramework.UserStore<ApplicationUser>(new ApplicationDbContext()));
+        var currentUser = manager.FindById(User.Identity.GetUserId());
+    }
+    <div class="well" style="background-color:black;color:white;">
+        <div class="row">
+            <div class="col-md-2">
+                <img src="@currentUser.ProfilePicture" class="img img-thumbnail img-responsive" width="200px" height="150px" />
+            </div>
+            <div class="col-md-8">
+                <h2>Welcome @currentUser.UserName</h2>
+                @Html.ActionLink("Delete Your Account", "DeleteAccount", new { id = currentUser.Id, count = 1 })
+                <p>
+                    <b>Password:</b>
+                    [
+                    @if (Model.HasPassword)
+                    {
+                        @Html.ActionLink("Change your password", "ChangePassword")
+                    }
+                    else
+                    {
+                        @Html.ActionLink("Create", "SetPassword")
+                    }
+                    ]
+                </p>
+            </div>
+        </div>
+        @using (Html.BeginForm("EditProfilePicture", "Manage", new { id = currentUser.Id }, FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal", role = "form" }))
+        {
+            <br />
+            @Html.AntiForgeryToken()
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-md-10" style="margin-left:20px">
+                        <input type="file" name="imgFile" class="input-files" accept=".png, .jpg, .jpeg, .gif, .tif" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-7" style="margin-left:20px">
+                        <input type="submit" class="btn btn-danger" value="Save" style="font-size:large" />
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    </div>
+            
+            

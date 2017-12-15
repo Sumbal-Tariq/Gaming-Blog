@@ -1,0 +1,275 @@
+﻿@using PagedList.Mvc;
+@model PagedList.IPagedList<GamingBlog.Models.Post>
+
+
+@{
+    ViewBag.Title = "Display";
+    Layout = "~/Views/Shared/_Dash.cshtml";
+}
+
+<h2>All Posts</h2>
+
+<p style="text-align:right">
+    <span class="btn btn-primary" id="MyButtonID">@Html.ActionLink("Add New Post", "NewPost")</span>
+</p>
+<ul class="nav nav-tabs">
+    <li class="active"><a data-toggle="tab" href="#home">All Posts &nbsp;<span class="badge">@ViewBag.TotalPosts</span></a></li>
+    <li><a data-toggle="tab" href="#menu1">Published&nbsp;<span class="badge">@ViewBag.PublishedPosts</span></a></li>
+    <li><a data-toggle="tab" href="#menu2">Draft&nbsp;<span class="badge">@ViewBag.DraftPosts</span></a></li>
+    <li><a data-toggle="tab" href="#menu3">Trash&nbsp;<span class="badge">@ViewBag.TrashPosts</span></a></li>
+</ul>
+
+<div class="tab-content">
+    <div id="home" class="tab-pane fade in active">
+        <table class="table">
+            <tr style="background-color:#930050;color:white">
+                <th style="text-align:center">
+                    Post Title
+                </th>
+                <th style="text-align:center">
+                    Author Name
+                </th>
+                <th style="text-align:center">
+                    Published Date
+                </th>
+                <th style="text-align:center">
+                    Post Category
+                </th>
+                <th style="text-align:center">
+                    Post Status
+                </th>
+                <th style="text-align:center">
+                    Post Picture
+                </th>
+                <th>
+
+                </th>
+
+            </tr>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td style="text-align:center">
+                        @Html.DisplayFor(modelItem => item.PostTitle)
+                    </td>
+                    <td style="text-align:center">
+                        @Html.DisplayFor(modelItem => item.AuthorName)
+                    </td>
+                    <td style="text-align:center">
+                        @Html.DisplayFor(modelItem => item.Date)
+                    </td>
+                    <td style="text-align:center">
+                        @Html.DisplayFor(modelItem => item.PostCategory)
+                    </td>
+                    <td style="text-align:center">
+                        @Html.DisplayFor(modelItem => item.PostStatus)
+                    </td>
+                    <td>
+                        <img src="@Html.DisplayFor(modelItem => item.ImageUrl)" class="img img-responsive" style="width:50px;height:50px" />
+                    </td>
+                    <td>
+                        <span class="btn btn-success" id="myButton">
+                            @Html.ActionLink("Edit", "EditAdmin", new { id = item.PostID }) </span> |
+                        <span class="btn btn-primary" id="myButton">
+                            @Html.ActionLink("Details", "DetailsAdmin", new { id = item.PostID }) </span> |
+                        <span class="btn btn-danger" id="myButton">
+                            @Html.ActionLink("Delete", "DeleteAdmin", new { id = item.PostID })</span>
+</td>
+                </tr>
+            }
+            @Html.PagedListPager(Model, page => Url.Action("Display", new { page }))
+
+        </table>
+
+    </div>
+    <div id="menu1" class="tab-pane fade">
+        <table class="table">
+            <tr style="background-color:#930050;color:white">
+                <th style="text-align:center">
+                    Post Title
+                </th>
+                <th style="text-align:center">
+                    Author Name
+                </th>
+                <th style="text-align:center">
+                    Published Date
+                </th>
+                <th style="text-align:center">
+                    Post Category
+                </th>
+                <th style="text-align:center">
+                    Post Status
+                </th>
+                <th style="text-align:center">
+                    Post Picture
+                </th>
+                <th style="text-align:center">
+
+                </th>
+
+            </tr>
+            @foreach (var item in ViewBag.Published)
+            {
+                <tr>
+                    <td style="text-align:center">
+                        @item.PostTitle
+                    </td>
+                    <td style="text-align:center">
+                        @item.AuthorName
+                    </td>
+                    <td style="text-align:center">
+                        @item.Date
+                    </td>
+                    <td style="text-align:center">
+                        @item.PostCategory
+                    </td>
+                    <td style="text-align:center">
+                        @item.PostStatus
+                    </td>
+                    <td>
+                        <img src="@item.ImageUrl" class="img img-responsive" style="width:50px;height:50px" />
+                    </td>
+                    <td>
+                        <span class="btn btn-success" id="myButton">
+                            @Html.ActionLink("Edit", "EditAdmin", new { id = item.PostID }) </span> |
+                        <span class="btn btn-primary" id="myButton">
+                            @Html.ActionLink("Details", "DetailsAdmin", new { id = item.PostID })</span> |
+                        <span class="btn btn-danger" id="myButton">    
+                            @Html.ActionLink("Delete", "DeleteAdmin", new { id = item.PostID })</span>
+</td>
+                </tr>
+            }
+            @Html.PagedListPager(Model, page => Url.Action("Display", new { page }))
+            </table>
+</div>
+    <div id="menu2" class="tab-pane fade">
+        <table class="table">
+            <tr style="background-color:#930050;color:white">
+                <th style="text-align:center">
+                    Post Title
+                </th>
+                <th style="text-align:center">
+                    Author Name
+                </th>
+                <th style="text-align:center">
+                    Published Date
+                </th>
+                <th style="text-align:center">
+                    Post Category
+                </th>
+                <th style="text-align:center">
+                    Post Status
+                </th>
+                <th style="text-align:center">
+                    Post Picture
+                </th>
+                <th style="text-align:center">
+
+                </th>
+
+            </tr>
+            @foreach (var item in ViewBag.Draft)
+            {
+                <tr>
+                    <td style="text-align:center">
+                        @item.PostTitle
+                    </td>
+                    <td style="text-align:center">
+                        @item.AuthorName
+                    </td>
+                    <td style="text-align:center">
+                        @item.Date
+                    </td>
+                    <td style="text-align:center">
+                        @item.PostCategory
+                    </td>
+                    <td style="text-align:center">
+                        @item.PostStatus
+                    </td>
+                    <td>
+                        <img src="@item.ImageUrl" class="img img-responsive" style="width:50px;height:50px" />
+                    </td>
+                    <td>
+                        <span class="btn btn-success" id="myButton">
+                            @Html.ActionLink("Edit", "EditAdmin", new { id = item.PostID })</span> |
+                        <span class="btn btn-primary" id="myButton">
+                            @Html.ActionLink("Details", "DetailsAdmin", new { id = item.PostID })</span> |
+                        <span class="btn btn-danger" id="myButton">   
+                            @Html.ActionLink("Delete", "DeleteAdmin", new { id = item.PostID })</span>
+</td>
+                </tr>
+            }
+            @Html.PagedListPager(Model, page => Url.Action("Display", new { page }))
+        </table>
+    </div>
+    <div id="menu3" class="tab-pane fade">
+        <table class="table">
+            <tr style="background-color:#930050;color:white">
+                <th style="text-align:center">
+                    Post Title
+                </th>
+                <th style="text-align:center">
+                    Author Name
+                </th>
+                <th style="text-align:center">
+                    Published Date
+                </th>
+                <th style="text-align:center">
+                    Post Category
+                </th>
+                <th style="text-align:center">
+                    Post Status
+                </th>
+                <th style="text-align:center">
+                    Post Picture
+                </th>
+                <th style="text-align:center">
+
+                </th>
+            </tr>
+            @{
+                if (ViewBag.TrashPosts > 0)
+                {
+
+                    foreach (var item in ViewBag.Trash)
+                    {
+                        <tr>
+                            <td style="text-align:center">
+                                @item.PostTitle
+                            </td>
+                            <td style="text-align:center">
+                                @item.AuthorName
+                            </td>
+                            <td style="text-align:center">
+                                @item.Date
+                            </td>
+                            <td style="text-align:center">
+                                @item.PostCategory
+                            </td>
+                            <td style="text-align:center">
+                                @item.PostStatus
+                            </td>
+                            <td>
+                                <img src="@item.ImageUrl" class="img img-responsive" style="width:50px;height:50px" />
+                            </td>
+                            <td>
+                                </tr>
+
+                        using (Html.BeginForm("Restore", "Trashes", new { id = item.TrashID}, FormMethod.Post))
+                        {
+                    @Html.AntiForgeryToken()
+                    <input type="submit" value="Restore" class="btn btn-warning" />
+                        }
+                        using (Html.BeginForm("DeleteConfirmed", "Trashes", new { id = item.TrashID }, FormMethod.Post))
+                        {
+                    @Html.AntiForgeryToken()
+                    <input type="submit" value="Delete" class="btn btn-warning" />
+                 }
+                    }
+                }
+                }
+            @Html.PagedListPager(Model, page => Url.Action("Display", new { page }))
+        </table>
+    </div>
+</div>
+

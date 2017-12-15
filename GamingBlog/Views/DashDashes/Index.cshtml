@@ -1,0 +1,31 @@
+﻿@using Microsoft.AspNet.Identity
+@using Microsoft.AspNet.Identity.EntityFramework;
+@using GamingBlog.Models;
+@model IEnumerable<GamingBlog.Models.DashDash>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Dash.cshtml";
+}
+
+@{
+    var manager = new UserManager<ApplicationUser>(new Microsoft.AspNet.Identity.EntityFramework.UserStore<ApplicationUser>(new ApplicationDbContext()));
+    var currentUser = manager.FindById(User.Identity.GetUserId());
+
+
+}
+<br />
+<div class="row" style="text-align:center">
+    <h style="color:#13395D;font-size:56px">Admin Dashboard</h>
+</div>
+<div class="row" style="text-align:center">
+    <img src="@currentUser.ProfilePicture" style="width:220px;height:250px" class="img-circle img-rounded" />
+</div>
+<div class="row" style="text-align:center">
+    <p style="font-size:20px;color:black">
+        I'm Tariq Sarfraz and This web app is related to Asp.Net.I'm using html,css bootstrap and
+        <br />javscript for frontend view and behind C# for backened. My own database include in this
+        project.
+    </p>
+</div>
+
