@@ -34,7 +34,10 @@
                         }
                         @if (ViewBag.AlreadyRated == false)
                         {
-                            <input type="submit" id="btnRegister" name="btnRegister" value="Submit Rating" class="btn btn-warning" />
+                            if (currentUser.UserName != "admin")
+                            {
+                                <input type="submit" id="btnRegister" name="btnRegister" value="Submit Rating" class="btn btn-warning" />
+                            }
                         }
                         else
                         {

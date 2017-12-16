@@ -69,7 +69,7 @@
             <p style="color:white">
                 <span class="glyphicon glyphicon-calendar" style="color:aqua;"></span>
                 <span>@Html.DisplayFor(model => model.Date)</span>&nbsp;&nbsp;
-                <span>2</span>
+                <span>@ViewBag.tcomments</span>
                 <span class="glyphicon glyphicon-comment" style="color:aqua;"></span>
             </p>
         </div>
@@ -87,10 +87,10 @@
             {
                 <div class="well-sm" style="border-bottom:2px solid white;">
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-1">
                             <img class="img img-responsive" src="@item.UserProfilePicture" width="50px" height="50px" style="border-radius:50%"/><span><strong>&nbsp; @item.AuthorName</strong></span>
                         </div>
-                        <div class="col-md-8">
+                        <div class="col-md-11">
                             <p>@item.ContentOfComment</p>
                             <p style="text-align:right;"><i class="glyphicon glyphicon-calendar"> </i>@item.DateOfComment</p>
                         </div>
@@ -100,52 +100,15 @@
             }
         }
     </div>
-@*<div style="background-color:#0C5A66;width:760px;height:auto;box-shadow:  0 0 10px 5px rgba(0,0,0,0.8); -moz-box-shadow: 0 0 10px  5px rgba(0,0,0,0.8);
-        -webkit-box-shadow: 0 0 10px 5px rgba(0,0,0,0.8);
-        border-left-color:black;filter: alpha(opacity=60); opacity: 0.8;float:left;margin-top:-380px" ;>
-    <br />
-    <span class="cmm-tabs-text-me" style="color:white;margin-left:20px;">Comments</span>
-    <br /><br />
-    <div style="width:30px;margin-right:5px;height:100%;float:left;margin-left:20px;">
-        <img src="http://placekitten.com/45/45" style="width:100%;border-radius:50%" />
-    </div>
-    <div class="commentText" ; style="border: 2px solid black;">
-        <p style="color:white">Hello this is a test comment and this comment is particularly very long and it goes on and on and on.</p>
-        <span class="date sub-text" style="margin-left:70px;color:darkorange">on March 5th, 2014</span>
-        <a class="date sub-text" style="margin-left:40px;color:deeppink">Reply</a>
-    </div>
-    <div style="width:30px;margin-right:5px;height:100%;float:left;margin-left:20px;">
-        <img src="http://placekitten.com/45/45" style="width:100%;border-radius:50%" />
-    </div>
-    <div class="commentText" ; style="border: 2px solid black;">
-        <p style="color:white">Hello this is a test comment and this comment is particularly very long and it goes on and on and on.</p>
-        <span class="date sub-text" style="margin-left:70px;color:darkorange">on March 5th, 2014</span>
-        <a class="date sub-text" style="margin-left:40px;color:deeppink">Reply</a>
-    </div>
-    <div style="width:30px;margin-right:5px;height:100%;float:left;margin-left:20px;">
-        <img src="http://placekitten.com/45/45" style="width:100%;border-radius:50%" />
-    </div>
-    <div class="commentText" ; style="border: 2px solid black;">
-        <p style="color:white">Hello this is a test comment and this comment is particularly very long and it goes on and on and on.</p>
-        <span class="date sub-text" style="margin-left:70px;color:darkorange">on March 5th, 2014</span>
-        <a class="date sub-text" style="margin-left:40px;color:deeppink">Reply</a>
-    </div>
-    <br />
-    <form>
-        <div class="form-group">
-            <textarea class="form-control" rows="5" id="comment" placeholder="Enter Your Comment" style="width:700px;margin-left:20px;"></textarea>
-            <br />
-            <button class="btn btn-success" style="margin-left:20px;width:90px;font-size:larger">Post</button>
-        </div>
-        <br />
-    </form>*@
+<br />
 
 
     <div>
         @Html.Partial("_Comment")
     </div>
 
-    <span class="btn btn-primary" id="myButton">@Html.ActionLink("back to list", "index")</span>
+<br />
+    <span class="btn btn-primary glyphicon glyphicon-arrow-left" id="myButton">@Html.ActionLink("Back", "index")</span>
 
 
 <script type="text/javascript">

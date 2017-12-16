@@ -42,8 +42,8 @@ namespace GamingBlog.Controllers
             ViewBag.DraftPosts = posts.Where(s => s.PostStatus.Equals("Draft")).Count();
             ViewBag.Draft = posts.Where(s => s.PostStatus.Equals("Draft"));
             ViewBag.DraftPosts = posts.Where(s => s.PostStatus.Equals("Draft")).Count();
-            ViewBag.Trash = db.Trashes.ToList();
-            ViewBag.TrashPosts = db.Trashes.ToList().Count();
+            ViewBag.Trash = posts.Where(s => s.PostStatus.Equals("Trash"));
+            ViewBag.TrashPosts = posts.Where(s => s.PostStatus.Equals("Trash")).Count();
             return View(posts.ToPagedList(pageNumber,pageSize));
         }
 
@@ -170,21 +170,49 @@ namespace GamingBlog.Controllers
         public ActionResult DeleteConfirmedAdmin(int id)
         {
             Post post = db.Posts.Find(id);
-            Trash trash = new Trash();
-            trash.AuthorName = post.AuthorName;
-            trash.Date = post.Date;
-            trash.ImageUrl = post.ImageUrl;
-            trash.PostCategory = post.PostCategory;
-            trash.TrashID = post.PostID;
-            trash.PostTitle = post.PostTitle;
-            trash.PostContent = post.PostContent;
-            trash.PostStatus = post.PostStatus;
-            db.Trashes.Add(trash);
             db.Posts.Remove(post);
             db.SaveChanges();
             return RedirectToAction("Display");
         }
 
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
+        public ActionResult Trash(int id)
+        {
+            Post post = db.Posts.Find(id);
+            if(post.PostStatus == "Draft")
+            {
+                post.TrashStatus = post.PostStatus;
+                post.PostStatus = "Trash";
+                
+            }
+            else
+            {
+                post.TrashStatus = post.PostStatus;
+                post.PostStatus = "Trash";
+            }
+            db.Entry(post).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("Display");
+        }
+
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
+        public ActionResult Restore(int id)
+        {
+            Post post = db.Posts.Find(id);
+            if (post.TrashStatus == "Draft")
+            {
+                post.PostStatus = "Draft";
+            }
+            else
+            {
+                post.PostStatus = "Published";
+            }
+            db.Entry(post).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("Display");
+        }
 
         protected override void Dispose(bool disposing)
         {

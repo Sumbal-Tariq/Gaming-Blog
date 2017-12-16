@@ -208,7 +208,6 @@
     <Compile Include="Controllers\PostsController.cs" />
     <Compile Include="Controllers\RatingsController.cs" />
     <Compile Include="Controllers\ShopsController.cs" />
-    <Compile Include="Controllers\TrashesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -217,26 +216,6 @@
       <DependentUpon>201712092117583_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\Address.cs" />
-    <Compile Include="Models\Blog.cs" />
-    <Compile Include="Models\Cart.cs" />
-    <Compile Include="Models\Category.cs" />
-    <Compile Include="Models\Comment.cs" />
-    <Compile Include="Models\Customer.cs" />
-    <Compile Include="Models\DashDash.cs" />
-    <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\Order.cs" />
-    <Compile Include="Models\OrderDetail.cs" />
-    <Compile Include="Models\PCategory.cs" />
-    <Compile Include="Models\Person.cs" />
-    <Compile Include="Models\Post.cs" />
-    <Compile Include="Models\Product.cs" />
-    <Compile Include="Models\Rating.cs" />
-    <Compile Include="Models\ShippingInfo.cs" />
-    <Compile Include="Models\Shop.cs" />
-    <Compile Include="Models\Trash.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service References\ASPSMSX2\Reference.cs">
       <AutoGen>True</AutoGen>
@@ -356,10 +335,7 @@
     <Content Include="Views\Posts\NewPost.cshtml" />
     <Content Include="Views\Posts\EditAdmin.cshtml" />
     <Content Include="Views\Posts\DetailsAdmin.cshtml" />
-    <Content Include="Views\Shops\Create.cshtml" />
-    <Content Include="Views\Shops\Delete.cshtml" />
     <Content Include="Views\Shops\Details.cshtml" />
-    <Content Include="Views\Shops\Edit.cshtml" />
     <Content Include="Views\Shops\Index.cshtml" />
     <Content Include="Views\Posts\DeleteAdmin.cshtml" />
     <Content Include="Views\Categories\IndexAdmin.cshtml" />

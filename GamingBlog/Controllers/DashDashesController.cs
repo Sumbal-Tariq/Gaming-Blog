@@ -17,6 +17,7 @@ namespace GamingBlog.Controllers
         private ApplicationDbContext context = new ApplicationDbContext();
 
         // GET: DashDashes
+        [Authorize(Roles = "Admin")]
         public ActionResult Index()
         {
             //var users = context.Users.ToList();
