@@ -41,7 +41,7 @@
             @Html.LabelFor(model => model.PostCategory, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 <select name="PostCategory">
-                    @foreach (var item in ViewBag.PostCategories)
+                    @foreach (var item in ViewBag.postCategories)
                     {
                         <option value="@item">@item</option>
                     }

@@ -75,7 +75,7 @@ namespace GamingBlog.Controllers
                               orderby d.Title
                               select d.Title;
             categoriesLst.AddRange(categoryQry.Distinct());
-            ViewBag.PostCategories = categoriesLst;
+            ViewBag.postCategories = categoriesLst;
             return View();
         }
 
@@ -97,6 +97,13 @@ namespace GamingBlog.Controllers
                 return RedirectToAction("Display");
             }
 
+            var categoriesLst = new List<string>();
+
+            var categoryQry = from d in db.Categories
+                              orderby d.Title
+                              select d.Title;
+            categoriesLst.AddRange(categoryQry.Distinct());
+            ViewBag.postCategories = categoriesLst;
             return View(post);
         }
 

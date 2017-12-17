@@ -15,7 +15,7 @@ namespace GamingBlog.Models
         [Required]
         [DisplayName("Post Title   ")]
         public string PostTitle { get; set; }
-        [Required]
+        [Required,StringLength(2000, MinimumLength = 150)]
         [DisplayName("Post Content")]
         [DataType(DataType.MultilineText)]
         public string PostContent { get; set; }
@@ -33,6 +33,7 @@ namespace GamingBlog.Models
         [Required]
         [DisplayName("Post Status  ")]
         public string PostStatus { get; set; }
+        public string TrashStatus { get; set; }
         public int TotalComments { get; set; }
         // default constructor
         public Post()

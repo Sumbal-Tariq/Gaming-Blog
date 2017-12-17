@@ -216,6 +216,28 @@
       <DependentUpon>201712092117583_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Address.cs" />
+    <Compile Include="Models\Admin.cs" />
+    <Compile Include="Models\Blog.cs" />
+    <Compile Include="Models\Cart.cs" />
+    <Compile Include="Models\Category.cs" />
+    <Compile Include="Models\Comment.cs" />
+    <Compile Include="Models\Customer.cs" />
+    <Compile Include="Models\DashDash.cs" />
+    <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Order.cs" />
+    <Compile Include="Models\OrderDetail.cs" />
+    <Compile Include="Models\PCategory.cs" />
+    <Compile Include="Models\Person.cs" />
+    <Compile Include="Models\Post.cs" />
+    <Compile Include="Models\Product.cs" />
+    <Compile Include="Models\Rating.cs" />
+    <Compile Include="Models\ShippingInfo.cs" />
+    <Compile Include="Models\Shop.cs" />
+    <Compile Include="Models\Trash.cs" />
+    <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service References\ASPSMSX2\Reference.cs">
       <AutoGen>True</AutoGen>
