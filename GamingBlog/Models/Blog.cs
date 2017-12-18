@@ -41,6 +41,8 @@ namespace GamingBlog.Models
         public DbSet<Cart> Carts { get; set; }
         public DbSet<Customer> Customers { get; set; }
         public System.Data.Entity.DbSet<GamingBlog.Models.Trash> Trashes { get; set; }
+
+        public System.Data.Entity.DbSet<GamingBlog.Models.Address> Addresses { get; set; }
     }
 
 }

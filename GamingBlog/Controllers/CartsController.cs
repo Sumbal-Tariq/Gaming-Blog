@@ -21,6 +21,7 @@ namespace GamingBlog.Controllers
             var userId = User.Identity.GetUserId();
             var allitems = db.Carts.Where(d => d.userID == userId).ToList();
             ViewBag.items = allitems;
+            ViewBag.itemcount = allitems.Count;
             if (allitems.Count() > 0)
             {
                 var itemsSum = allitems.Sum(d => d.totalCost);

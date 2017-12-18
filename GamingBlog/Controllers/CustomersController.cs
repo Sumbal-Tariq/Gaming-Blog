@@ -15,27 +15,6 @@ namespace GamingBlog.Controllers
     {
         private BlogDBContext db = new BlogDBContext();
 
-        // GET: Customers
-        public ActionResult Index()
-        {
-            return View(db.Customers.ToList());
-        }
-
-        // GET: Customers/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Customer customer = db.Customers.Find(id);
-            if (customer == null)
-            {
-                return HttpNotFound();
-            }
-            return View(customer);
-        }
-
         // GET: Customers/Create
         public ActionResult Create()
         {
@@ -54,13 +33,20 @@ namespace GamingBlog.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "CustomerID,CreditCard,userEmail,userName,userId")] Customer customer)
+        public ActionResult Create([Bind(Include = "CustomerID,CreditCard,userEmail,userName,userId,phn_No")] Customer customer)
         {
+            var userID = User.Identity.GetUserId();
+            var customerr = db.Customers.Where(d => d.userId == userID).ToList();
+            if (customerr.Count == 1)
+            {
+                var cust = db.Customers.Single(d => d.userId == userID);
+                return RedirectToAction("Edit", "Customers", new { id = cust.CustomerID });
+            }
             if (ModelState.IsValid)
             {
                 db.Customers.Add(customer);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Create","Addresses");
             }
 
             return View(customer);
@@ -86,43 +72,17 @@ namespace GamingBlog.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "CustomerID,CreditCard,userEmail,userName,userId")] Customer customer)
+        public ActionResult Edit([Bind(Include = "CustomerID,CreditCard,userEmail,userName,userId,phn_No")] Customer customer)
         {
+            Customer customerr = db.Customers.Find(customer.CustomerID);
             if (ModelState.IsValid)
             {
-                db.Entry(customer).State = EntityState.Modified;
+                db.Entry(customerr).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Edit","Addresses", new { id = customerr.address });
             }
             return View(customer);
         }
-
-        // GET: Customers/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Customer customer = db.Customers.Find(id);
-            if (customer == null)
-            {
-                return HttpNotFound();
-            }
-            return View(customer);
-        }
-
-        // POST: Customers/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Customer customer = db.Customers.Find(id);
-            db.Customers.Remove(customer);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)

@@ -1,8 +1,12 @@
 ﻿@model IEnumerable<GamingBlog.Models.Cart>
-
+@using Microsoft.AspNet.Identity
+@using Microsoft.AspNet.Identity.EntityFramework;
+@using GamingBlog.Models;
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var manager = new UserManager<ApplicationUser>(new Microsoft.AspNet.Identity.EntityFramework.UserStore<ApplicationUser>(new ApplicationDbContext()));
+    var currentUser = manager.FindById(User.Identity.GetUserId());
 }
 <style>
     #myCarousel {
@@ -12,7 +16,6 @@
         background-color:white;
     }
 </style>
-
 <table class="table">
     <tr style="background-color:#930050;color:white">
         <th style="text-align:center">
@@ -90,10 +93,26 @@
 </span>
 
 <span style="text-align:center" class="col-md-6">
-    @using (Html.BeginForm("Create", "Customers", FormMethod.Post))
+    @using (Html.BeginForm("Create", "Customers", FormMethod.Post, new { onsubmit = "return Submit()" }))
     {
         @Html.AntiForgeryToken()
+        <input type="hidden" name="userName" value="@User.Identity.GetUserName()" />
+        <input type="hidden" name="userEmail" value="@currentUser.Email" />
         <input type="submit" value="CheckOut" class="btn btn-primary" id="MyButtonID" />
     }
 </span>
+
+
+<script>
+    function Submit() {
+        if (@ViewBag.itemcount == 0) {
+            alert('Please select the items.');
+            return false;
+        } else
+        {
+            return true;
+        }
+    }
+</script>
+
 

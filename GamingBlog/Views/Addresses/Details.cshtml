@@ -1,0 +1,192 @@
+﻿@model GamingBlog.Models.Address
+@using Microsoft.AspNet.Identity
+@using Microsoft.AspNet.Identity.EntityFramework;
+@using GamingBlog.Models;
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var manager = new UserManager<ApplicationUser>(new Microsoft.AspNet.Identity.EntityFramework.UserStore<ApplicationUser>(new ApplicationDbContext()));
+    var currentUser = manager.FindById(User.Identity.GetUserId());
+}
+<style>
+    body {
+        background-color: white;
+    }
+</style>
+<h2>Your Details</h2>
+
+<div class="row">
+    <div class="col-md-5">
+@foreach (var item in ViewBag.cust)
+{
+    <dl class="dl-horizontal">
+        <dt>
+            Customer Name:
+        </dt>
+
+        <dd>
+            @item.userName
+        </dd>
+
+        <dt>
+            Customer Email:
+        </dt>
+
+        <dd>
+            @item.userEmail
+        </dd>
+
+        <dt>
+            Phone Number:
+        </dt>
+
+        <dd>
+            @item.phn_No
+        </dd>
+
+        <dt>
+            CreditCard Number
+        </dt>
+
+        <dd>
+            @item.CreditCard
+        </dd>
+        </dl>
+        }
+</div>
+
+    <div class="col-md-5">
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.ZipCode)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.ZipCode)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.City)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.City)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Country)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Country)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.userid)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.userid)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model._Address)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model._Address)
+            </dd>
+
+        </dl>
+    </div>
+</div>
+
+<div class="row">
+    <table class="table">
+    <tr style="background-color:#930050;color:white">
+        <th style="text-align:center">
+            Product ID
+        </th>
+        <th style="text-align:center">
+            Product Name
+        </th>
+        <th style="text-align:center">
+            Product Quantity
+        </th>
+        <th style="text-align:center">
+            Image
+        </th>
+        <th style="text-align:center">
+            Unit Cost
+        </th>
+        <th style="text-align:center">
+           Total Cost
+        </th>
+    </tr>
+
+    @foreach (var item in ViewBag.carts)
+    {
+        <tr>
+            <td style="text-align:center">
+                @item.itemid
+            </td>
+            <td style="text-align:center">
+                @item.cartItemName
+            </td>
+            <td style="text-align:center">
+                @item.itemQuantity
+            </td>
+            <td style="text-align:center">
+                <img src="@item.itemImage" class="img img-responsive" style="width:50px;height:50px" />
+            </td>
+            <td style="text-align:center">
+                $@item.UnitCost
+            </td>
+            <td style="text-align:center">
+                $@item.totalCost
+            </td>
+        </tr>
+    }
+    <hr />
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td style="text-align:center">
+            Total: $@ViewBag.itemSum
+        </td>
+    </tr>
+
+    </table>
+</div>
+
+
+<span style="text-align:center" class="col-md-4">
+    @using (Html.BeginForm("Create", "Customers", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <input type="hidden" name="userName" value="@User.Identity.GetUserName()" />
+        <input type="hidden" name="userEmail" value="@currentUser.Email" />
+        <input type="submit" value="Edit Profile" class="btn btn-primary" id="MyButtonID" />
+    }
+</span>
+
+<span style="text-align:center" class="col-md-4">
+    @using (Html.BeginForm("Delete", "Addresses", new { id = @Html.DisplayFor(model => model.id) }, FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <input type="submit" value="Cancel Order" class="btn btn-success" id="MyButtonID" />
+    }
+</span>
+
+<span style="text-align:center" class="col-md-4">
+    @using (Html.BeginForm("Index", "Shops", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <input type="submit" value="Edit Order" class="btn btn-primary" id="MyButtonID" />
+    }
+</span>
+
+

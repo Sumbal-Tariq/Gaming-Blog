@@ -1,5 +1,7 @@
 ﻿@model GamingBlog.Models.Customer
-
+@using Microsoft.AspNet.Identity
+@using Microsoft.AspNet.Identity.EntityFramework;
+@using GamingBlog.Models;
 @{
     ViewBag.Title = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -18,7 +20,8 @@
     
     <div class="form-horizontal">
         <hr />
-        
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.CustomerID)
         <div class="form-group">
             @Html.LabelFor(model => model.userEmail, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -43,8 +46,17 @@
         </div>
 
         <div class="form-group">
+            @Html.LabelFor(model => model.phn_No, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.phn_No, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.phn_No, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <input type="hidden" name="userId" value="@User.Identity.GetUserId()" />
+
+        <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-success" />
+                <input type="submit" value="Submit" class="btn btn-success" />
             </div>
         </div>
     </div>
