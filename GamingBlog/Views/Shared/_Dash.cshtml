@@ -62,6 +62,8 @@
                                 <p style="text-decoration:none;color:white;font-size:30px;text-align:center"> @User.Identity.GetUserName()</p>
                                 <li style="background-color:cadetblue;border-bottom-color:white">@Html.ActionLink("Blog Posts", "Display", "Posts")</span></li>
                                 <li>@Html.ActionLink("Post Categories", "IndexAdmin", "Categories")</li>
+                                <li>@Html.ActionLink("Products", "Index", "Products")</li>
+                                <li>@Html.ActionLink("Product Categories", "Index", "PCategories")</li>
                                 <li>@Html.ActionLink("Users", "users", "DashDashes")<span class="badge" id="numberOfUsers"></span></li>
                             </ul>
                         </div>

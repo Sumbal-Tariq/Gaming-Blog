@@ -7,6 +7,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using GamingBlog.Models;
+using PagedList;
+using Microsoft.AspNet.Identity;
 
 namespace GamingBlog.Controllers
 {
@@ -15,104 +17,51 @@ namespace GamingBlog.Controllers
         private BlogDBContext db = new BlogDBContext();
 
         // GET: Shops
-        public ActionResult Index()
+        public ActionResult Index(string productCategory, string SearchString, int? page)
         {
-            return View(db.Shop.ToList());
+            var categoryLst = new List<string>();
+
+            var categoryQry = from d in db.Products
+                              orderby d.ProductCategory
+                              select d.ProductCategory;
+
+            categoryLst.AddRange(categoryQry.Distinct());
+            ViewBag.products = categoryLst;
+
+            var products = from m in db.Products
+                        select m;
+            // use only those post for display with status of published
+            products = products.Where(s => s.ProductStatus.Equals("Published"));
+
+            if (!String.IsNullOrEmpty(SearchString))
+            {
+                products = products.Where(s => s.ProductName.Contains(SearchString));
+                products = products.Where(s => s.ProductStatus.Equals("Published"));
+            }
+
+            if (!string.IsNullOrEmpty(productCategory))
+            {
+                products = products.Where(x => x.ProductCategory == productCategory);
+            }
+            products = products.OrderByDescending(m => m.ProductPrice);
+            int pageNumber = (page ?? 1);
+            int pageSize = 12;
+            return View(products.ToPagedList(pageNumber, pageSize));
         }
 
         // GET: Shops/Details/5
         public ActionResult Details(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Shop shop = db.Shop.Find(id);
-            if (shop == null)
-            {
-                return HttpNotFound();
-            }
-            return View(shop);
-        }
-
-        // GET: Shops/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Shops/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ShopID,ShopTitle")] Shop shop)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Shop.Add(shop);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            return View(shop);
-        }
-
-        // GET: Shops/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Shop shop = db.Shop.Find(id);
-            if (shop == null)
+            Product product = db.Products.Find(id);
+            var userId = User.Identity.GetUserId();
+            var allitems = db.Carts.Where(d => d.userID == userId).Count();
+            ViewBag.item = allitems;
+            if (product == null)
             {
                 return HttpNotFound();
             }
-            return View(shop);
-        }
-
-        // POST: Shops/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ShopID,ShopTitle")] Shop shop)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(shop).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(shop);
-        }
-
-        // GET: Shops/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Shop shop = db.Shop.Find(id);
-            if (shop == null)
-            {
-                return HttpNotFound();
-            }
-            return View(shop);
-        }
-
-        // POST: Shops/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Shop shop = db.Shop.Find(id);
-            db.Shop.Remove(shop);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            ViewBag.ArticleId = id.Value;
+            return View(product);
         }
 
         protected override void Dispose(bool disposing)

@@ -200,12 +200,16 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BlogsController.cs" />
+    <Compile Include="Controllers\CartsController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\CommentsController.cs" />
+    <Compile Include="Controllers\CustomersController.cs" />
     <Compile Include="Controllers\DashDashesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\PCategoriesController.cs" />
     <Compile Include="Controllers\PostsController.cs" />
+    <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\RatingsController.cs" />
     <Compile Include="Controllers\ShopsController.cs" />
     <Compile Include="Global.asax.cs">
@@ -262,8 +266,11 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Images\1s.jpeg" />
+    <Content Include="Images\1sl.jpg" />
     <Content Include="Images\2s.jpg" />
+    <Content Include="Images\2sl.jpg" />
     <Content Include="Images\3s.jpg" />
+    <Content Include="Images\3sl.jpg" />
     <Content Include="Images\4.jpg" />
     <Content Include="Images\4s.png" />
     <Content Include="Images\ad.jpg" />
@@ -377,9 +384,27 @@
     <Content Include="Views\Comments\Edit.cshtml" />
     <Content Include="Views\Comments\Index.cshtml" />
     <Content Include="Views\Comments\Create.cshtml" />
+    <Content Include="Views\Products\Create.cshtml" />
+    <Content Include="Views\Products\Delete.cshtml" />
+    <Content Include="Views\Products\Details.cshtml" />
+    <Content Include="Views\Products\Edit.cshtml" />
+    <Content Include="Views\Products\Index.cshtml" />
+    <Content Include="Views\PCategories\Create.cshtml" />
+    <Content Include="Views\PCategories\Delete.cshtml" />
+    <Content Include="Views\PCategories\Details.cshtml" />
+    <Content Include="Views\PCategories\Edit.cshtml" />
+    <Content Include="Views\PCategories\Index.cshtml" />
+    <Content Include="Views\Carts\Delete.cshtml" />
+    <Content Include="Views\Carts\Index.cshtml" />
+    <Content Include="Views\Customers\Create.cshtml" />
+    <Content Include="Views\Customers\Delete.cshtml" />
+    <Content Include="Views\Customers\Details.cshtml" />
+    <Content Include="Views\Customers\Edit.cshtml" />
+    <Content Include="Views\Customers\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="img\Products\" />
     <Folder Include="img\profiles\" />
   </ItemGroup>
   <ItemGroup>

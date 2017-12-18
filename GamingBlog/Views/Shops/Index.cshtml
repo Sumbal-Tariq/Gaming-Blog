@@ -1,87 +1,65 @@
-﻿@model IEnumerable<GamingBlog.Models.Shop>
-
+﻿@using PagedList.Mvc;
+@model PagedList.IPagedList<GamingBlog.Models.Product>
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <style>
-    #slider {
-        display: none;
-    }
     .container{
-        width:4000px
+        width:4000px;
     }
 </style>
 
+<br />
 <div class="container">
-    <br />
-    <div id="myCarousel" class="carousel slide" data-ride="carousel">
-        <!-- Indicators -->
-        <ol class="carousel-indicators">
-            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-            <li data-target="#myCarousel" data-slide-to="1"></li>
-            <li data-target="#myCarousel" data-slide-to="2"></li>
-        </ol>
+    <section id="home-section">
+        @using (Html.BeginForm("Index", "Shops", FormMethod.Get))
+        {
+            <span>    </span><span>
+                <select name="productCategory" style="width:20%;line-height:30px;background-color:#233c4f;
+                    color:white;font-size:27px;border-radius:4px;border:1px solid #AAAAAA;" class="btn-group">
+                    @foreach (var item in ViewBag.products)
+                    {
+                        <option style="font-size:large" value="@item">@item</option>
+                    }
+                </select>
+                <input type="submit" value="Filter" class="btn btn-primary" />
+            </span>
+        }
+        <br />
 
-        <!-- Wrapper for slides -->
-        <div class="carousel-inner">
-            <div class="item active">
-                <img src="~/img/1s.jpg" alt="Gamicon" style="width:100%;max-height:450px">
-            </div>
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                <div class="col-md-3">
+                    <div class="panel" style="background-color:ButtonText;opacity:0.8">
+                        <div class="panel-body">
+                            <img src="@item.ImageUrl" style="height:20%;display:block" class="img-thumbnail img-responsive image cloud-zoom" />
+                            <div class="middle" style="padding-left:160px;padding-top:60px">
+                                <span class="btn btn-success" id="myButton">
+                                    @Html.ActionLink("View Details", "Details", new { id = item.ProductID })
+                                </span>
+                            </div>
+                            <p style="color:white">
+                                <span class="glyphicon glyphicon-hand-right" style="color:aqua;"></span>
+                                <span>  Category: @item.ProductCategory</span>&nbsp;&nbsp;
+                            </p>
+                            <p>
+                                <span style="color:aqua;">Price:</span>
+                                <span>$@item.ProductPrice</span>
+                            </p>
+                           
+                        </div>
+                    </div>
 
-            <div class="item">
-                <img src="~/img/2s.jpg" alt="Gamicon" style="width:100%;max-height:450px">
-            </div>
-
-            <div class="item">
-                <img src="~/img/3s.jpg" alt="Gamicon" style="width:100%;max-height:450px">
-            </div>
+                </div>
+                                }
         </div>
-    </div>
 </div>
 
-<h2 style="color:white">Shop</h2>
+<br />
+<div>
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+</div>
 
-<div style="box-shadow:  0 0 10px 5px rgba(0,0,0,0.8); -moz-box-shadow: 0 0 10px  5px rgba(0,0,0,0.8); -webkit-box-shadow: 0 0 10px 5px rgba(0,0,0,0.8);
-        max-width:400px; max-height:930px; border-left-color:black;filter: alpha(opacity=60); opacity: 1;
-        border: 3px solid black;float:left" class="fade_e">
-
-    <div>
-        <img src="~/img/0.jpg" style="width:394px; height:350px;" />
-    </div>
-    <div style="color:white;width:400px;">
-        <span class="row">
-            <span style="margin-left:5px;font-size:larger;color:aqua"><b>Remort Control</b></span>
-            <br />
-            <span style="margin-left:5px">Price: $8</span>
-            <span style="margin-left:20px" class="glyphicon glyphicon-calendar"></span>
-            <span>28/11/2017</span>
-            <span>2 Items</span>
-            <button style="margin-left:40px" class="btn btn-success">Buy Now</button>
-        </span>
-        
-        <br />
-    </div>
-   </div> 
-
-<div style="box-shadow:  0 0 10px 5px rgba(0,0,0,0.8); -moz-box-shadow: 0 0 10px  5px rgba(0,0,0,0.8); -webkit-box-shadow: 0 0 10px 5px rgba(0,0,0,0.8);
-        max-width:400px; max-height:930px; border-left-color:black;filter: alpha(opacity=60); opacity: 1;
-        border: 3px solid black;float:left;margin-left:15px" class="fade_e">
-
-    <div>
-        <img src="~/img/3s.jpg" style="width:394px; height:350px;" />
-    </div>
-    <div style="color:white;width:400px;">
-        <span class="row">
-            <span style="margin-left:5px;font-size:larger;color:aqua"><b>Tabs</b></span>
-            <br />
-            <span style="margin-left:5px">Price: $9</span>
-            <span style="margin-left:20px" class="glyphicon glyphicon-calendar"></span>
-            <span>28/11/2017</span>
-            <span>6 Items</span>
-            <button style="margin-left:40px" class="btn btn-success">Buy Now</button>
-        </span>
-
-        <br />
-    </div>
-</div> 
+</section>

@@ -1,0 +1,99 @@
+﻿@model IEnumerable<GamingBlog.Models.Cart>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    #myCarousel {
+        display: none;
+    }
+    body{
+        background-color:white;
+    }
+</style>
+
+<table class="table">
+    <tr style="background-color:#930050;color:white">
+        <th style="text-align:center">
+            @Html.DisplayNameFor(model => model.itemid)
+        </th>
+        <th style="text-align:center">
+            @Html.DisplayNameFor(model => model.cartItemName)
+        </th>
+        <th style="text-align:center">
+            @Html.DisplayNameFor(model => model.itemQuantity)
+        </th>
+        <th style="text-align:center">
+            @Html.DisplayNameFor(model => model.itemImage)
+        </th>
+        <th style="text-align:center">
+            @Html.DisplayNameFor(model => model.UnitCost)
+        </th>
+        <th style="text-align:center">
+            @Html.DisplayNameFor(model => model.totalCost)
+        </th>
+        <th style="text-align:center">
+
+        </th>
+    </tr>
+
+@foreach (var item in ViewBag.items) {
+    <tr>
+        <td style="text-align:center">
+            @item.itemid
+        </td>
+        <td style="text-align:center">
+            @item.cartItemName
+        </td>
+        <td style="text-align:center">
+            @item.itemQuantity
+        </td>
+        <td style="text-align:center">
+            <img src="@item.itemImage" class="img img-responsive" style="width:50px;height:50px" />
+        </td>
+        <td style="text-align:center">
+            $@item.UnitCost
+        </td>
+        <td style="text-align:center">
+            $@item.totalCost
+        </td>
+        <td style="text-align:center">
+            @using (Html.BeginForm("Delete", "Carts", new { id = item.CartID }, FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                    <input type="submit" value="Delete" class="btn btn-danger" />
+            }
+        </td>
+    </tr>
+}
+    <hr />
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td style="text-align:center">
+           Total: $@ViewBag.itemSum
+        </td>
+    </tr>
+
+</table>
+
+<span style="text-align:center;padding-left:300px" class="col-md-3">
+    @using (Html.BeginForm("Index", "Shops", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <input type="submit" value="Continue Shopping.." class="btn btn-success" id="MyButtonID" />
+    }
+</span>
+
+<span style="text-align:center" class="col-md-6">
+    @using (Html.BeginForm("Create", "Customers", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <input type="submit" value="CheckOut" class="btn btn-primary" id="MyButtonID" />
+    }
+</span>
+

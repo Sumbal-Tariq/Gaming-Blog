@@ -1,0 +1,91 @@
+﻿@model GamingBlog.Models.Product
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Dash.cshtml";
+}
+
+<h2>Product Details</h2>
+
+<div>
+    <hr />
+    <div class="row">
+        <div class="col-md-7">
+            <dt>
+                @Html.DisplayNameFor(model => model.ProductName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.ProductName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.ProductPrice)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.ProductPrice)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Date)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Date)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.quantity)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.quantity)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.itemStatus)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.itemStatus)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.ProductStatus)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.ProductStatus)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.ProductCategory)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.ProductCategory)
+            </dd>
+        </div>
+        <div class="col-md-5">
+            <img src="@Html.DisplayFor(model => model.ImageUrl)" class="img img-responsive" style="width:170px;height:170px" />
+        </div>
+    </div>
+    <div class="row col-md-12">
+        <dt>
+            @Html.DisplayNameFor(model => model.ProductDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProductDescription)
+        </dd>
+
+    </div>
+</div>
+
+<br />
+<p>
+    <span class="btn btn-primary  glyphicon glyphicon-arrow-left" " id="myButton">
+        @Html.ActionLink("Back", "Index")
+    </span>
+</p>

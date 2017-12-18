@@ -1,27 +1,99 @@
-﻿@model GamingBlog.Models.Shop
+﻿@model GamingBlog.Models.Product
+@using Microsoft.AspNet.Identity
+@using Microsoft.AspNet.Identity.EntityFramework;
+@using GamingBlog.Models;
 
 @{
     ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var manager = new UserManager<ApplicationUser>(new Microsoft.AspNet.Identity.EntityFramework.UserStore<ApplicationUser>(new ApplicationDbContext()));
+    var currentUser = manager.FindById(User.Identity.GetUserId());
 }
 
-<h2>Details</h2>
+@using (Html.BeginForm("Index", "Carts", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <div class="row col-md-12">
+        <span style="text-align:center;font-size:30px" class="glyphicon glyphicon-shopping-cart"><input type="submit" value="@ViewBag.item" style="font-size:18px"/></span>
+    </div>
+}
 
-<div>
-    <h4>Shop</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.ShopTitle)
-        </dt>
+@using (Html.BeginForm("Create", "Carts", FormMethod.Post, new { onsubmit = "return Submit()" }))
+{
+    @Html.AntiForgeryToken()
 
-        <dd>
-            @Html.DisplayFor(model => model.ShopTitle)
-        </dd>
+    <div class="row">
+        <div class="row col-md-12">
+            <div class="col-md-6" style="padding-left:180px">
+                <img src="@Html.DisplayFor(model => model.ImageUrl)" style="width:100%;" class="img img-thumbnail img-responsive" />
+            </div>
+            <div class="col-md-5" style="padding-right:180px;text-align:left;height:auto">
 
-    </dl>
-</div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ShopID }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+                <span style="color:white;text-align:left;font-size:medium">
+                    <span class="glyphicon glyphicon-hand-right" style="color:aqua;"></span>&nbsp;&nbsp;&nbsp;<b style="color:aqua">Product Name: </b> @Html.DisplayFor(model => model.ProductName)
+                </span><br />
+                <span style="color:white;text-align:left;font-size:medium">
+                    <span class="glyphicon glyphicon-hand-right" style="color:aqua;"></span>&nbsp;&nbsp;&nbsp;<b style="color:aqua">Category: </b> @Html.DisplayFor(model => model.ProductCategory)
+                </span><br />
+                <span style="color:white;text-align:left;font-size:medium">
+                    <span class="glyphicon glyphicon-hand-right" style="color:aqua;"></span>&nbsp;&nbsp;&nbsp;<b style="color:aqua">Price: </b>$@Html.DisplayFor(model => model.ProductPrice)
+                </span><br />
+                <span style="color:white;text-align:left;font-size:medium">
+                    <span class="glyphicon glyphicon-calendar" style="color:aqua;"></span>&nbsp;&nbsp;&nbsp;<b style="color:aqua">Date: </b> @Html.DisplayFor(model => model.Date)
+                </span><br />
+                <span style="color:white;text-align:left;font-size:medium">
+                    <span class="glyphicon glyphicon-hand-right" style="color:aqua;"></span>&nbsp;&nbsp;&nbsp;<b style="color:aqua">Status: </b> @Html.DisplayFor(model => model.itemStatus)
+                </span><br /><br />
+                <p style="color:white;text-align:justify;color:aqua;font-size:large"><b>Description:</b></p>
+                <p style="color:white;text-align:justify">
+                    @Html.DisplayFor(model => model.ProductDescription)
+                </p>
+                <br />
+            </div>
+        </div>
+    </div>
+ <div class="row col-md-12" style="padding-left:180px;font-size:medium">
+     <span style="padding-right:10px;color:aqua"><b>Item Quantity </b><input type="number" id="quan" name="itemQuantity" min="1" max="@Html.DisplayFor(model => model.quantity)"></span>
+            <span>
+                <input type="hidden" name="userID" value="@User.Identity.GetUserId()" />
+                <input type="hidden" name="cartItemName" value="@Html.DisplayFor(model => model.ProductName)" />
+                <input type="hidden" name="itemid" value="@ViewBag.ArticleId" />
+                <input type="hidden" name="UnitCost" value="@Html.DisplayFor(model => model.ProductPrice)" />
+                <input type="hidden" name="itemImage" value="@Html.DisplayFor(model => model.ImageUrl)" />
+                @if (!User.Identity.IsAuthenticated)
+                    {
+                        <span style="color:white;font-size:medium;">Please <a href="/Account/Login?ReturnUrl=@Request.Url.AbsolutePath" title="Login to rate">Login</a>for shopping</span>
+                    return;
+                }
+                else
+                {
+                    if (Html.DisplayFor(model => model.itemStatus).ToString() == "Available")
+                    {
+                        <input type="submit" id="btnRegister" name="btnRegister" value="Add Cart" class="btn btn-warning" />
+                    }
+                    else
+                    {
+                        <input type="submit" id="btnRegister" name="btnRegister" value="Add Cart" class="btn btn-warning" disabled />
+                    }
+
+
+                }
+            </span>
+
+        </div>
+<br />
+<span class="btn btn-primary glyphicon glyphicon-arrow-left" id="MyButtonID">@Html.ActionLink("Back", "Index")</span>
+}
+
+<script>
+    function Submit() {
+        if ($("#quan").val() == "0" || $("#quan").val() == "") {
+            alert("Please select the item quantity.");
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+</script>
+

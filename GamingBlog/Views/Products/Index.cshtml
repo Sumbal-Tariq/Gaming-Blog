@@ -1,0 +1,297 @@
+﻿@using PagedList.Mvc;
+@model PagedList.IPagedList<GamingBlog.Models.Product>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Dash.cshtml";
+}
+
+<h2>All Products</h2>
+
+<p style="text-align:right">
+    <span class="btn btn-primary" id="MyButtonID">@Html.ActionLink("Add New Product", "Create")</span>
+</p>
+<ul class="nav nav-tabs">
+    <li class="active"><a data-toggle="tab" href="#home">All Products &nbsp;<span class="badge">@ViewBag.TotalProducts</span></a></li>
+    <li><a data-toggle="tab" href="#menu1">Published&nbsp;<span class="badge">@ViewBag.PublishedProducts</span></a></li>
+    <li><a data-toggle="tab" href="#menu2">Draft&nbsp;<span class="badge">@ViewBag.DraftProducts</span></a></li>
+    <li><a data-toggle="tab" href="#menu3">Trash&nbsp;<span class="badge">@ViewBag.TrashProducts</span></a></li>
+</ul>
+
+<div class="tab-content">
+    <div id="home" class="tab-pane fade in active">
+        <table class="table">
+            <tr style="background-color:#930050;color:white">
+                <th style="text-align:center">
+                    Product Name
+                </th>
+                <th style="text-align:center">
+                    Product Price
+                </th>
+                <th style="text-align:center">
+                    Published Date
+                </th>
+                <th style="text-align:center">
+                    Product Category
+                </th>
+                <th style="text-align:center">
+                    Quantity
+                </th>
+                <th style="text-align:center">
+                    Post Picture
+                </th>
+                <th>
+
+                </th>
+
+            </tr>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td style="text-align:center">
+                        @Html.DisplayFor(modelItem => item.ProductName)
+                    </td>
+                    <td style="text-align:center">
+                        @Html.DisplayFor(modelItem => item.ProductPrice)
+                    </td>
+                    <td style="text-align:center">
+                        @Html.DisplayFor(modelItem => item.Date)
+                    </td>
+                    <td style="text-align:center">
+                        @Html.DisplayFor(modelItem => item.ProductCategory)
+                    </td>
+                    <td style="text-align:center">
+                        @Html.DisplayFor(modelItem => item.quantity)
+                    </td>
+                    <td>
+                        <img src="@Html.DisplayFor(modelItem => item.ImageUrl)" class="img img-responsive" style="width:50px;height:50px" />
+                    </td>
+                    <td>
+                        @using (Html.BeginForm("Trash", "Products", new { id = item.ProductID }, FormMethod.Post))
+                        {
+                            @Html.AntiForgeryToken()
+                            <span class="btn btn-success" id="myButton">
+                                @Html.ActionLink("Edit", "Edit", new { id = item.ProductID })
+                            </span>
+                            <span class="btn btn-primary" id="myButton">
+                                @Html.ActionLink("Details", "Details", new { id = item.ProductID })
+                            </span>
+                            <span><input type="submit" value="Delete" class="btn btn-danger" /></span>
+                        }
+                    </td>
+                </tr>
+            }
+            @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+
+        </table>
+
+    </div>
+
+    <div id="menu1" class="tab-pane fade">
+        <table class="table">
+            <tr style="background-color:#930050;color:white">
+                <th style="text-align:center">
+                    Product Name
+                </th>
+                <th style="text-align:center">
+                    Product Price
+                </th>
+                <th style="text-align:center">
+                    Published Date
+                </th>
+                <th style="text-align:center">
+                    Product Category
+                </th>
+                <th style="text-align:center">
+                    Quantity
+                </th>
+                <th style="text-align:center">
+                    Post Picture
+                </th>
+                <th>
+
+                </th>
+
+            </tr>
+            @foreach (var item in ViewBag.Published)
+            {
+                <tr>
+                    <td style="text-align:center">
+                        @item.ProductName
+                    </td>
+                    <td style="text-align:center">
+                        @item.ProductPrice
+                    </td>
+                    <td style="text-align:center">
+                        @item.Date
+                    </td>
+                    <td style="text-align:center">
+                        @item.ProductCategory
+                    </td>
+                    <td style="text-align:center">
+                        @item.quantity
+                    </td>
+                    <td>
+                        <img src="@item.ImageUrl" class="img img-responsive" style="width:50px;height:50px" />
+                    </td>
+                    <td>
+                        @using (Html.BeginForm("Trash", "Products", new { id = item.ProductID }, FormMethod.Post))
+                        {
+                            @Html.AntiForgeryToken()
+                            <span class="btn btn-success" id="myButton">
+                                @Html.ActionLink("Edit", "Edit", new { id = item.ProductID })
+                            </span>
+                            <span class="btn btn-primary" id="myButton">
+                                @Html.ActionLink("Details", "Details", new { id = item.ProductID })
+                            </span>
+                            <span><input type="submit" value="Delete" class="btn btn-danger" /></span>
+                        }
+                    </td>
+                </tr>
+            }
+            @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+
+        </table>
+
+    </div>
+
+    <div id="menu1" class="tab-pane fade">
+        <table class="table">
+            <tr style="background-color:#930050;color:white">
+                <th style="text-align:center">
+                    Product Name
+                </th>
+                <th style="text-align:center">
+                    Product Price
+                </th>
+                <th style="text-align:center">
+                    Published Date
+                </th>
+                <th style="text-align:center">
+                    Product Category
+                </th>
+                <th style="text-align:center">
+                    Quantity
+                </th>
+                <th style="text-align:center">
+                    Post Picture
+                </th>
+                <th>
+
+                </th>
+
+            </tr>
+            @foreach (var item in ViewBag.Draft)
+            {
+                <tr>
+                    <td style="text-align:center">
+                        @item.ProductName
+                    </td>
+                    <td style="text-align:center">
+                        @item.ProductPrice
+                    </td>
+                    <td style="text-align:center">
+                        @item.Date
+                    </td>
+                    <td style="text-align:center">
+                        @item.ProductCategory
+                    </td>
+                    <td style="text-align:center">
+                        @item.quantity
+                    </td>
+                    <td>
+                        <img src="@item.ImageUrl" class="img img-responsive" style="width:50px;height:50px" />
+                    </td>
+                    <td>
+                        @using (Html.BeginForm("Trash", "Products", new { id = item.ProductID }, FormMethod.Post))
+                        {
+                            @Html.AntiForgeryToken()
+                            <span class="btn btn-success" id="myButton">
+                                @Html.ActionLink("Edit", "Edit", new { id = item.ProductID })
+                            </span>
+                            <span class="btn btn-primary" id="myButton">
+                                @Html.ActionLink("Details", "Details", new { id = item.ProductID })
+                            </span>
+                            <span><input type="submit" value="Delete" class="btn btn-danger" /></span>
+                        }
+                    </td>
+                </tr>
+            }
+            @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+
+        </table>
+
+    </div>
+
+    <div id="menu3" class="tab-pane fade">
+        <table class="table">
+            <tr style="background-color:#930050;color:white">
+                <th style="text-align:center">
+                    Product Name
+                </th>
+                <th style="text-align:center">
+                    Product Price
+                </th>
+                <th style="text-align:center">
+                    Published Date
+                </th>
+                <th style="text-align:center">
+                    Product Category
+                </th>
+                <th style="text-align:center">
+                    Quantity
+                </th>
+                <th style="text-align:center">
+                    Post Picture
+                </th>
+                <th>
+
+                </th>
+
+            </tr>
+@{
+    if (ViewBag.TrashProducts > 0)
+    {
+        foreach (var item in ViewBag.Trash)
+        {
+                <tr>
+                    <td style="text-align:center">
+                        @item.ProductName
+                    </td>
+                    <td style="text-align:center">
+                        @item.ProductPrice
+                    </td>
+                    <td style="text-align:center">
+                        @item.Date
+                    </td>
+                    <td style="text-align:center">
+                        @item.ProductCategory
+                    </td>
+                    <td style="text-align:center">
+                        @item.quantity
+                    </td>
+                    <td>
+                        <img src="@item.ImageUrl" class="img img-responsive" style="width:50px;height:50px" />
+                    </td>
+                    <td>
+                        @using (Html.BeginForm("Restore", "Products", new { id = item.ProductID }, FormMethod.Post))
+                        {
+                            @Html.AntiForgeryToken()
+                            <span><input type="submit" value="Restore" class="btn btn-primary" /></span>
+                                    <span class="btn btn-danger" id="myButton">
+                                        @Html.ActionLink("Delete", "Delete", new { id = item.ProductID })
+                                    </span>
+                        }
+                    </td>
+                </tr>
+            }
+        }
+    }
+            @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+
+        </table>
+
+    </div>
+
+    </div>
+

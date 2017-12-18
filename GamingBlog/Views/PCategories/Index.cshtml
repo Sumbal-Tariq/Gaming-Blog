@@ -1,0 +1,40 @@
+﻿@model IEnumerable<GamingBlog.Models.PCategory>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Dash.cshtml";
+}
+
+<h2>All Product Categories</h2>
+
+<p>
+    <span class="btn btn-primary" id="MyButtonID">@Html.ActionLink("Add Category", "Create")</span>
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.PCategoryTitle)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.PCategoryTitle)
+        </td>
+        <td>
+            <span class="btn btn-success" id="myButton">
+                @Html.ActionLink("Edit", "Edit", new { id = item.PCategoryID })
+            </span> |
+            <span class="btn btn-primary" id="myButton">
+                @Html.ActionLink("Details", "Details", new { id = item.PCategoryID })
+            </span> |
+            <span class="btn btn-danger" id="myButton">
+                @Html.ActionLink("Delete", "Delete", new { id = item.PCategoryID })
+            </span>
+        </td>
+    </tr>
+}
+
+</table>

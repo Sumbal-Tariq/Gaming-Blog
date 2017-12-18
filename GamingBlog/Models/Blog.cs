@@ -36,7 +36,10 @@ namespace GamingBlog.Models
         public DbSet<Rating> Ratings { set; get;}
         public DbSet<DashDash> DashDashes { get; set; }
         public DbSet<Shop> Shop { get; set; }
-
+        public DbSet<PCategory> PCategories { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<Cart> Carts { get; set; }
+        public DbSet<Customer> Customers { get; set; }
         public System.Data.Entity.DbSet<GamingBlog.Models.Trash> Trashes { get; set; }
     }
 
